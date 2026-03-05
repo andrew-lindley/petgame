@@ -625,7 +625,13 @@ export default function Home() {
 
         {/* Change Pet button — top left */}
         <motion.button
-          onClick={() => setShowUpload(true)}
+          onClick={() => {
+            if (import.meta.env.PROD && !import.meta.env.VITE_API_URL) {
+              toast.info("Adopt a Pet requires a server! Run the full app locally to use this feature.");
+              return;
+            }
+            setShowUpload(true);
+          }}
           whileHover={{ scale: 1.07 }}
           whileTap={{ scale: 0.93 }}
           className="absolute top-3 left-3 flex items-center gap-1 rounded-full font-bold shadow-md"
